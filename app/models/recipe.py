@@ -4,7 +4,8 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.core.database import Base
 
 if TYPE_CHECKING:
-    from .ingredient import Ingredient    
+    from .ingredient import Ingredient
+
 
 class Recipe(Base):
     __tablename__ = "recipes"
@@ -16,6 +17,5 @@ class Recipe(Base):
     instructions: Mapped[str] = mapped_column(String)
 
     shopping_list: Mapped[List["Ingredient"]] = relationship(
-        secondary="recipe_shoppinglist",
-        back_populates="recipes"
+        secondary="recipe_shoppinglist", back_populates="recipes"
     )
