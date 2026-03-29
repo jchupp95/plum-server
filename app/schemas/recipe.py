@@ -27,7 +27,7 @@ class RecipeRead(RecipeBase):
         from_attributes = True
 
 
-from .ingredient import IngredientBase # noqa: E402
+from .ingredient import IngredientBase  # noqa: E402
 
 RecipeCreate.model_rebuild()
 RecipeRead.model_rebuild()
