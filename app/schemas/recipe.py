@@ -27,6 +27,10 @@ class RecipeRead(RecipeBase):
         from_attributes = True
 
 
+class RecipeSimpleRead(RecipeBase):
+    id: int
+
+
 from .ingredient import IngredientBase  # noqa: E402
 
 RecipeCreate.model_rebuild()

@@ -5,6 +5,7 @@ from app.core.database import Base
 
 if TYPE_CHECKING:
     from .ingredient import Ingredient
+    from .menu import Menu
 
 
 class Recipe(Base):
@@ -18,4 +19,10 @@ class Recipe(Base):
 
     shopping_list: Mapped[List["Ingredient"]] = relationship(
         secondary="recipe_shoppinglist", back_populates="recipes"
+    )
+
+    menus: Mapped[List["Menu"]] = relationship(
+        "Menu",
+        secondary="menu_recipe",
+        back_populates="recipes",
     )
