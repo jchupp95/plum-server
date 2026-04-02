@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from app.models.menu import Menu
 from app.models.recipe import Recipe
-from app.schemas.menu import MenuBase
 
 
 def get_menu(db: Session, menu_id: int):
@@ -16,8 +15,12 @@ def get_menus(db: Session):
     return db.query(Menu).filter(~Menu.is_current).all()
 
 
-def create_menu(db: Session, menu: MenuBase):
-    db_menu = Menu(name=menu.name)
+def get_menu_by_name(db: Session, name: str):
+    return db.query(Menu).filter(Menu.name == name).first()
+
+
+def create_menu(db: Session, menu_name: str):
+    db_menu = Menu(name=menu_name)
     db.add(db_menu)
     db.commit()
     db.refresh(db_menu)
@@ -36,3 +39,12 @@ def update_menu_items(db: Session, menu_id: int, recipes: list[int]):
     db.commit()
     db.refresh(db_menu)
     return db_menu
+
+
+def delete_menu(db: Session, menu_id: int):
+    db_menu = get_menu(db, menu_id)
+    if db_menu:
+        db.delete(db_menu)
+        db.commit()
+        return True
+    return False

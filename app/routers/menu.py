@@ -45,3 +45,11 @@ def update_menu_recipes(
     if not db_menu:
         raise HTTPException(status_code=404, detail="Menu not found")
     return db_menu
+
+
+@router.delete("/{menu_id}", response_model=bool)
+def delete_menu(menu_id: int, db: Session = Depends(get_db)):
+    success = crud.delete_menu(db, menu_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Menu not found")
+    return success
