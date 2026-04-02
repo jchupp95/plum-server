@@ -9,6 +9,14 @@ class RecipeBase(BaseModel):
     name: str
 
 
+class RecipeOverview(RecipeBase):
+    id: int
+    image: str
+
+    class Config:
+        from_attributes = True
+
+
 class RecipeCreate(RecipeBase):
     image: str
     ingredients: str
