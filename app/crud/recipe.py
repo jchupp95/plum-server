@@ -16,16 +16,34 @@ def get_recipes(db: Session):
     return db.query(Recipe).all()
 
 
-def create_recipe(db: Session, recipe: RecipeCreate):
-    shopping_list = (
-        db.query(Ingredient)
-        .filter(
-            Ingredient.name.in_(
-                [ingredient.name for ingredient in recipe.shopping_list]
-            )
-        )
-        .all()
+def build_shopping_list(db: Session, recipe: RecipeCreate) -> list[Ingredient]:
+    ingredient_names: list[str] = []
+    for ingredient in recipe.shopping_list:
+        if ingredient.name not in ingredient_names:
+            ingredient_names.append(ingredient.name)
+
+    if not ingredient_names:
+        return []
+
+    existing_ingredients = (
+        db.query(Ingredient).filter(Ingredient.name.in_(ingredient_names)).all()
     )
+    ingredients_by_name = {
+        ingredient.name: ingredient for ingredient in existing_ingredients
+    }
+
+    for ingredient_name in ingredient_names:
+        if ingredient_name not in ingredients_by_name:
+            new_ingredient = Ingredient(name=ingredient_name)
+            db.add(new_ingredient)
+            db.flush()
+            ingredients_by_name[ingredient_name] = new_ingredient
+
+    return [ingredients_by_name[name] for name in ingredient_names]
+
+
+def create_recipe(db: Session, recipe: RecipeCreate):
+    shopping_list = build_shopping_list(db, recipe)
 
     db_recipe = Recipe(
         name=recipe.name,
@@ -56,17 +74,7 @@ def update_recipe(db: Session, recipe_id: int, recipe: RecipeCreate):
         db_recipe.image = recipe.image
         db_recipe.ingredients = recipe.ingredients
         db_recipe.instructions = recipe.instructions
-
-        shopping_list = (
-            db.query(Ingredient)
-            .filter(
-                Ingredient.name.in_(
-                    [ingredient.name for ingredient in recipe.shopping_list]
-                )
-            )
-            .all()
-        )
-        db_recipe.shopping_list = shopping_list
+        db_recipe.shopping_list = build_shopping_list(db, recipe)
 
         db.commit()
         db.refresh(db_recipe)

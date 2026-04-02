@@ -1,11 +1,17 @@
+from pathlib import Path
+
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from app.core.database import Base, engine
 from app.routers import menu, recipe, ingredient, shopping_list, stock_item
 from app.core.config import settings
 
 Base.metadata.create_all(bind=engine)
+images_dir = Path("images")
+images_dir.mkdir(parents=True, exist_ok=True)
 
 app = FastAPI(title=settings.PROJECT_NAME, debug=settings.DEBUG)
+app.mount("/images", StaticFiles(directory=images_dir), name="images")
 
 app.include_router(ingredient.router, prefix="/ingredient", tags=["Ingredients"])
 app.include_router(recipe.router, prefix="/recipe", tags=["Recipes"])
