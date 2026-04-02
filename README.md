@@ -57,6 +57,7 @@ Example `.env`:
 ```env
 PROJECT_NAME=Plum API
 DATABASE_URL=sqlite:///./app.db
+IMAGES_DIR=images
 DEBUG=True
 ```
 
@@ -158,3 +159,30 @@ Useful commands:
 uv run ruff check .
 uv run pre-commit run --all-files
 ```
+
+## Docker
+
+Build the image:
+
+```bash
+docker build -t plum-server .
+```
+
+Run it with external bind mounts for both the SQLite database file and recipe images:
+
+```bash
+docker run --rm -p 8000:8000 \
+  -v /absolute/path/to/app.db:/data/app.db \
+  -v /absolute/path/to/images:/data/images \
+  plum-server
+```
+
+Container defaults:
+
+```env
+DATABASE_URL=sqlite:////data/app.db
+IMAGES_DIR=/data/images
+DEBUG=False
+```
+
+That means the API serves mounted images from `/images/...` and stores SQLite data in the mounted `app.db` file outside the container.
