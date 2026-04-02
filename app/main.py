@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.core.database import Base, engine
-from app.routers import menu, recipe, ingredient, shopping_list
+from app.routers import menu, recipe, ingredient, shopping_list, stock_item
 from app.core.config import settings
 
 Base.metadata.create_all(bind=engine)
@@ -13,3 +13,4 @@ app.include_router(menu.router, prefix="/menu", tags=["Menus"])
 app.include_router(
     shopping_list.router, prefix="/shopping-list", tags=["Shopping List"]
 )
+app.include_router(stock_item.router, prefix="/stock-item", tags=["Stock Items"])
