@@ -75,7 +75,7 @@ def create_recipe(
     recipe = RecipeCreate(
         name=name,
         image=image_url,
-        ingredients=ingredients,
+        ingredients=ingredients or "",
         instructions=instructions or "",
         shopping_list=parsed_shopping_list,
     )
@@ -86,7 +86,7 @@ def create_recipe(
 def update_recipe(
     recipe_id: int,
     name: str = Form(...),
-    ingredients: str = Form(...),
+    ingredients: str | None = Form(None),
     instructions: str | None = Form(None),
     shopping_list: str | None = Form(None),
     image: UploadFile | None = File(None),
@@ -107,7 +107,7 @@ def update_recipe(
     recipe = RecipeCreate(
         name=name,
         image=image_url,
-        ingredients=ingredients,
+        ingredients=ingredients or "",
         instructions=instructions or "",
         shopping_list=parsed_shopping_list,
     )
