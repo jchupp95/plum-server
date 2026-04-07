@@ -7,12 +7,13 @@ from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from pydantic import TypeAdapter, ValidationError
 from sqlalchemy.orm import Session
 from app.api.deps import get_db
+from app.core.config import settings
 from app.schemas.ingredient import IngredientBase
 from app.schemas.recipe import RecipeRead, RecipeCreate, RecipeOverview
 import app.crud.recipe as crud
 
 router = APIRouter()
-IMAGES_DIR = Path("images")
+IMAGES_DIR = Path(settings.IMAGES_DIR)
 SHOPPING_LIST_ADAPTER = TypeAdapter(list[IngredientBase])
 
 

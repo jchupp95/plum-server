@@ -1,0 +1,15 @@
+services:
+  plum:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: plum-server
+    ports:
+      - "8444:8444"
+    volumes:
+      - ./app.db:/data/app.db
+      - ./images:/data/images
+    environment:
+      DATABASE_URL: sqlite:////data/app.db
+      IMAGES_DIR: /data/images
+      DEBUG: "False"

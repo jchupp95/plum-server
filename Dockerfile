@@ -18,6 +18,6 @@ ENV DATABASE_URL=sqlite:////data/app.db
 ENV IMAGES_DIR=/data/images
 ENV DEBUG=False
 
-EXPOSE 8000
+EXPOSE 8444
 
-CMD ["uv", "run", "fastapi", "run", "app/main.py", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "fastapi", "run", "app/main.py", "--host", "0.0.0.0", "--port", "8444"]

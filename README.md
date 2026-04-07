@@ -171,9 +171,18 @@ docker build -t plum-server .
 Run it with external bind mounts for both the SQLite database file and recipe images:
 
 ```bash
-docker run --rm -p 8000:8000 \
+docker run --rm -p 8444:8444 \
   -v /absolute/path/to/app.db:/data/app.db \
   -v /absolute/path/to/images:/data/images \
+  plum-server
+```
+
+On Windows PowerShell from the repository root:
+
+```powershell
+docker run --rm -p 8444:8444 `
+  -v "${PWD}\app.db:/data/app.db" `
+  -v "${PWD}\images:/data/images" `
   plum-server
 ```
 
