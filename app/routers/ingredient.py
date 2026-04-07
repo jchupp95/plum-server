@@ -22,6 +22,7 @@ def read_ingredient(ingredient_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Ingredient not found")
     return db_ingredient
 
+
 @router.get("/", response_model=list[IngredientRead])
 def read_ingredients(db: Session = Depends(get_db)):
-    return crud.get_ingredients(db) 
+    return crud.get_ingredients(db)
