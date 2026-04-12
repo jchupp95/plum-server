@@ -49,7 +49,9 @@ Default values:
 ```env
 PROJECT_NAME=Plum API
 DATABASE_URL=sqlite:///./app.db
+IMAGES_DIR=images
 DEBUG=True
+CORS_ORIGINS=*
 ```
 
 Example `.env`:
@@ -59,6 +61,7 @@ PROJECT_NAME=Plum API
 DATABASE_URL=sqlite:///./app.db
 IMAGES_DIR=images
 DEBUG=True
+CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
 ```
 
 ## Database Notes
@@ -192,6 +195,7 @@ Container defaults:
 DATABASE_URL=sqlite:////data/app.db
 IMAGES_DIR=/data/images
 DEBUG=False
+CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
 ```
 
 That means the API serves mounted images from `/images/...` and stores SQLite data in the mounted `app.db` file outside the container.

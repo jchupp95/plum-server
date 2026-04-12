@@ -1,15 +1,15 @@
 services:
   plum:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: plum-server
+    image: ghcr.io/jchupp95/plum-server:latest
+    container_name: plum
+    restart: unless-stopped
     ports:
       - "8444:8444"
     volumes:
-      - ./app.db:/data/app.db
+      - ./data:/data
       - ./images:/data/images
     environment:
       DATABASE_URL: sqlite:////data/app.db
       IMAGES_DIR: /data/images
       DEBUG: "False"
+      CORS_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
