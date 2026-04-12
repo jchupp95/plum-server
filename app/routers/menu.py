@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.api.deps import get_db
-from app.schemas.menu import MenuBase, MenuRead
+from app.schemas.menu import MenuBase, MenuRead, MenuRecipesUpdate
 import app.crud.menu as crud
 
 router = APIRouter()
@@ -39,9 +39,9 @@ def read_menus(db: Session = Depends(get_db)):
 
 @router.put("/{menu_id}/recipes", response_model=MenuRead)
 def update_menu_recipes(
-    menu_id: int, recipe_ids: list[int], db: Session = Depends(get_db)
+    menu_id: int, payload: MenuRecipesUpdate, db: Session = Depends(get_db)
 ):
-    db_menu = crud.update_menu_items(db, menu_id, recipe_ids)
+    db_menu = crud.update_menu_items(db, menu_id, payload.recipe_ids)
     if not db_menu:
         raise HTTPException(status_code=404, detail="Menu not found")
     return db_menu

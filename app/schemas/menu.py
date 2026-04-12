@@ -14,6 +14,10 @@ class MenuCreate(MenuBase):
     pass
 
 
+class MenuRecipesUpdate(BaseModel):
+    recipe_ids: list[int]
+
+
 class MenuRead(MenuBase):
     id: int
     recipes: list["RecipeSimpleRead"] = []
