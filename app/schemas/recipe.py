@@ -37,6 +37,7 @@ class RecipeRead(RecipeBase):
 
 class RecipeSimpleRead(RecipeBase):
     id: int
+    image: str
 
 
 from .ingredient import IngredientBase  # noqa: E402
