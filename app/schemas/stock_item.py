@@ -3,8 +3,6 @@ from pydantic import BaseModel
 
 class StockItemBase(BaseModel):
     name: str
-    quantity: float
-    unit: str
 
 
 class StockItemCreate(StockItemBase):
@@ -13,6 +11,3 @@ class StockItemCreate(StockItemBase):
 
 class StockItemRead(StockItemBase):
     id: int
-
-    class Config:
-        from_attributes = True

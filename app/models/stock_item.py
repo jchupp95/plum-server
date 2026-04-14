@@ -8,5 +8,3 @@ class StockItem(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     name: Mapped[str] = mapped_column(String, unique=True, index=True)
-    quantity: Mapped[int] = mapped_column(Integer, default=0)
-    unit: Mapped[str] = mapped_column(String)
