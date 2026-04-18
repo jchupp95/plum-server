@@ -21,3 +21,12 @@ def create_ingredient(db: Session, ingredient: IngredientCreate):
     db.commit()
     db.refresh(db_ingredient)
     return db_ingredient
+
+
+def delete_ingredient(db: Session, ingredient_id: int):
+    ingredient = db.query(Ingredient).filter(Ingredient.id == ingredient_id).first()
+    if ingredient:
+        db.delete(ingredient)
+        db.commit()
+        return True
+    return False

@@ -26,3 +26,8 @@ def read_ingredient(ingredient_id: int, db: Session = Depends(get_db)):
 @router.get("/", response_model=list[IngredientRead])
 def read_ingredients(db: Session = Depends(get_db)):
     return crud.get_ingredients(db)
+
+
+@router.delete("/{ingredient_id}", response_model=bool)
+def delete_ingredient(ingredient_id: int, db: Session = Depends(get_db)):
+    return crud.delete_ingredient(db, ingredient_id)
