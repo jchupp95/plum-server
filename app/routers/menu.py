@@ -8,11 +8,13 @@ router = APIRouter()
 
 
 @router.post("/", response_model=MenuBase)
-def create_menu(menu_name: str, db: Session = Depends(get_db)):
+def create_menu(
+    menu_name: str, is_current: bool = False, db: Session = Depends(get_db)
+):
     db_menu = crud.get_menu_by_name(db, menu_name)
     if db_menu:
         raise HTTPException(status_code=400, detail="Menu already registered")
-    return crud.create_menu(db, menu_name)
+    return crud.create_menu(db, menu_name, is_current)
 
 
 @router.get("/current", response_model=MenuRead)

@@ -19,8 +19,8 @@ def get_menu_by_name(db: Session, name: str):
     return db.query(Menu).filter(Menu.name == name).first()
 
 
-def create_menu(db: Session, menu_name: str):
-    db_menu = Menu(name=menu_name)
+def create_menu(db: Session, menu_name: str, is_current: bool = False):
+    db_menu = Menu(name=menu_name, is_current=is_current)
     db.add(db_menu)
     db.commit()
     db.refresh(db_menu)

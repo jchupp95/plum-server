@@ -11,7 +11,11 @@ class MenuBase(BaseModel):
 
 
 class MenuCreate(MenuBase):
-    pass
+    is_current: bool = False
+
+
+class MenuUpdate(MenuBase):
+    is_current: bool = False
 
 
 class MenuRecipesUpdate(BaseModel):
